@@ -1,3 +1,5 @@
+[![Deno](https://github.com/sust4in/cpu_serial/actions/workflows/deno.yml/badge.svg)](https://github.com/sust4in/cpu_serial/actions/workflows/deno.yml)
+
 # Deno CPU Serial Number Retrieval
 
 A simple Deno module to retrieve the CPU serial number in a cross-platform way.
