@@ -69,15 +69,15 @@ async function getCPUSerialMac(): Promise<string> {
 }
 
 async function getCPUSerialLinux(): Promise<string> {
-    const ps = run({
-        stdout: "piped",
-        cmd: ["sudo", "dmidecode", "-t", "processor"],
-      });
-    
-      const output = await readAll(ps.stdout!);
-    
-      ps.stdout.close();
-      ps.close();
-    
-      return parse(output, "linux");
+  const ps = run({
+    stdout: "piped",
+    cmd: ["sudo", "dmidecode", "-t", "processor"],
+  });
+
+  const output = await readAll(ps.stdout!);
+
+  ps.stdout.close();
+  ps.close();
+
+  return parse(output, "linux");
 }
