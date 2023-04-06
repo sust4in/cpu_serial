@@ -1,4 +1,3 @@
-
 # Deno CPU Serial Number Retrieval
 
 A simple Deno module to retrieve the CPU serial number in a cross-platform way.
@@ -20,3 +19,4 @@ try {
 } catch (error) {
   console.error(error);
 }
+```
