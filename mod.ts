@@ -34,7 +34,7 @@ function parse(bytes: Uint8Array, os: string): string {
     const idMatch = trimmedOutput.match(
       /(?<=ID: )[0-9A-Fa-f]{2}(?:\s[0-9A-Fa-f]{2}){7}/,
     );
-    return idMatch ? idMatch[1].trim() : "";
+    return idMatch ? idMatch[0].trim() : "";
   } else if (os === "darwin") {
     const match = output.match(/Serial\sNumber\s\(system\):\s+(\S+)/);
     return match ? match[1] : "";
