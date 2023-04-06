@@ -28,10 +28,12 @@ function parse(bytes: Uint8Array, os: string): string {
       return serialMatch[1];
     }
 
-    // If a unique serial number is not found, try to extract the CPU ID
+    // If a unique serial number is not found, try to extract the CPU ID. Regex may be wrong
     // Note: This ID is not unique
     const trimmedOutput = output.trim();
-    const idMatch = trimmedOutput.match(/ID:\s*([\S\s]+)$/);
+    const idMatch = trimmedOutput.match(
+      /(?<=ID: )[0-9A-Fa-f]{2}(?:\s[0-9A-Fa-f]{2}){7}/,
+    );
     return idMatch ? idMatch[1].trim() : "";
   } else if (os === "darwin") {
     const match = output.match(/Serial\sNumber\s\(system\):\s+(\S+)/);
