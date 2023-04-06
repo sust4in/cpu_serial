@@ -1,4 +1,4 @@
-const { run, build, readAll, readFile, env } = Deno;
+const { run, build, readAll } = Deno;
 
 export function getCPUSerialNumber(): Promise<string> {
   switch (build.os) {
