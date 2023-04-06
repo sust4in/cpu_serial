@@ -23,8 +23,15 @@ function parse(bytes: Uint8Array, os: string): string {
       .replace(/\r+|\n+|\s+/gi, "")
       .trim();
   } else if (os === "linux") {
-    const match = output.match(/Serial\s+:\s+(\S+)/);
-    return match ? match[1] : "";
+    const serialMatch = output.match(/Serial\s+:\s+(\S+)/);
+    if (serialMatch) {
+      return serialMatch[1];
+    }
+
+    // If a unique serial number is not found, try to extract the CPU ID
+    // Note: This ID is not unique
+    const idMatch = output.match(/ID:\s*(\S+)/);
+    return idMatch ? idMatch[1] : "";
   } else if (os === "darwin") {
     const match = output.match(/Serial\sNumber\s\(system\):\s+(\S+)/);
     return match ? match[1] : "";
@@ -62,15 +69,15 @@ async function getCPUSerialMac(): Promise<string> {
 }
 
 async function getCPUSerialLinux(): Promise<string> {
-  const ps = run({
-    stdout: "piped",
-    cmd: ["cat", "/proc/cpuinfo"],
-  });
-
-  const output = await readAll(ps.stdout!);
-
-  ps.stdout.close();
-  ps.close();
-
-  return parse(output, "linux");
+    const ps = run({
+        stdout: "piped",
+        cmd: ["sudo", "dmidecode", "-t", "processor"],
+      });
+    
+      const output = await readAll(ps.stdout!);
+    
+      ps.stdout.close();
+      ps.close();
+    
+      return parse(output, "linux");
 }
